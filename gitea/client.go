@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -95,6 +96,9 @@ func (c *Client) doRequest(method, path string, header http.Header, body io.Read
 		req.Header[k] = v
 	}
 
+	for k, v := range req.Header {
+		logrus.Warnf("HEADER: %s = %s", k, v)
+	}
 	return c.client.Do(req)
 }
 
